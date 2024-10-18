@@ -8,6 +8,15 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation(libs.guava)
+    implementation(files("ears.jar"))
+}
+
+val javaVersion = JavaLanguageVersion.of("21")
+
+java {
+    toolchain {
+        languageVersion.set(javaVersion)
+    }
 }
 
 application {
