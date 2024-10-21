@@ -4,9 +4,7 @@ on:
     branches: 
       - master
     paths:
-      - submissions/minimal
-    paths-ignore:
-      - README.md
+      - submissions/minimal/**
   pull_request:
     types:
       - opened
@@ -14,9 +12,7 @@ on:
     branches:
       - master
     paths:
-      - submissions/minimal
-    paths-ignore:
-      - README.md
+      - submissions/minimal/**
 jobs:
   service:
     runs-on: ubuntu-latest
