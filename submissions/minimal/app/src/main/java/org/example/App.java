@@ -27,6 +27,7 @@ public class App {
                 t.resetCounter();
             }
             System.out.println(sb);
+            sb.append("\n");
         }
     }
 }
