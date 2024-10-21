@@ -22,4 +22,4 @@ jobs:
     - uses: cachix/install-nix-action@v27
           
     - name: Build service
-      run: nix run .#submissions.minimal
+      run: nix shell --inputs-from . nixpkgs#jdk --command  nix run .#submissions.minimal
