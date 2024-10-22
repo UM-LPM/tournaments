@@ -30,6 +30,6 @@ public class App {
             sb.append("\n");
         }
 
-        System.out.println("DONE");
+        System.out.println("DONE!");
     }
 }
