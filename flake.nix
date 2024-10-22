@@ -33,9 +33,7 @@
         {
           systemd.services.submissions = {
             description = "Submissions service";
-            restartTriggers = [
-              self.packages.x86_64-linux.submissions.minimal
-            ];
+            wantedBy = [ "multi-user.target" ];
             serviceConfig = {
               User = "ears";
               ExecStart = lib.getExe self.packages.x86_64-linux.submissions.minimal;
