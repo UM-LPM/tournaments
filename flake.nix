@@ -26,7 +26,7 @@
       };
 
     }) // {
-      nixosModules.devenv = { config, lib, pkgs, ... }:
+      nixosModules.default = { config, lib, pkgs, ... }:
         let
           cfg = config.ears;
         in
