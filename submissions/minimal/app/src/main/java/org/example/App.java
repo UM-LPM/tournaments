@@ -29,5 +29,7 @@ public class App {
             System.out.println(sb);
             sb.append("\n");
         }
+
+        System.out.println("DONE");
     }
 }
