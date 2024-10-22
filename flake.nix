@@ -22,7 +22,24 @@
       };
 
       devShells.default = pkgs.mkShell {
-        buildInputs = [ pkgs.gradle pkgs.jdk ];
+        buildInputs = [ pkgs.gradle pkgs.jdk11 ];
       };
-    });
+
+    }) // {
+      nixosModules.devenv = { config, lib, pkgs, ... }:
+        let
+          cfg = config.ears;
+        in
+        {
+          systemd.services.submissions = {
+            description = "Submissions service";
+            serviceConfig = {
+              Type = "oneshot";
+              User = "ears";
+              ExecStart = lib.getExe self.packages.x86_64-linux.minimal;
+            };
+          };
+
+        };
+    };
 }
