@@ -12,6 +12,19 @@
         overlays = [build-gradle-application.overlays.default];
       };
 
+      boot-detect = pkgs.writeScript "boot-detect" ''
+        ${pkgs.mount}/bin/mount -t tmpfs -o size=1 tmpfs /boot-detect
+      '';
+
+      submission = pkgs.writeScript "submission" ''
+        if [[ -f /boot-detect ]]
+        then
+          echo "BOOT"
+        else
+          ${lib.getExe self.packages.x86_64-linux.submissions.minimal}
+        fi
+      '';
+
       mkEars = pkgs.callPackage ./nix/ears.nix {};
     in
     {
@@ -31,13 +44,23 @@
           cfg = config.ears;
         in
         {
+          systemd.services.boot-detect = {
+            description = "Submissions service";
+            wantedBy = [ "multi-user.target" ];
+            wants = [ "submissions.service" ];
+
+            serviceConfig = {
+              ExecStart = lib.getExe boot-detect;
+            };
+          };
           systemd.services.submissions = {
             description = "Submissions service";
             wantedBy = [ "multi-user.target" ];
+            
             serviceConfig = {
               User = "ears";
               ExecStart = "${pkgs.coreutils}/bin/true";
-              ExecReload = lib.getExe self.packages.x86_64-linux.submissions.minimal;
+              ExecReload = lib.getExe submission;
             };
           };
 
