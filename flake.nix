@@ -37,7 +37,6 @@
               self.packages.x86_64-linux.submissions.minimal
             ];
             serviceConfig = {
-              Type = "oneshot";
               User = "ears";
               ExecStart = lib.getExe self.packages.x86_64-linux.submissions.minimal;
             };
