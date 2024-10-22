@@ -12,19 +12,6 @@
         overlays = [build-gradle-application.overlays.default];
       };
 
-      boot-detect = pkgs.writeScript "boot-detect" ''
-        ${pkgs.mount}/bin/mount -t tmpfs -o size=1 tmpfs /boot-detect
-      '';
-
-      submission = pkgs.writeScript "submission" ''
-        if [[ -f /boot-detect ]]
-        then
-          echo "BOOT"
-        else
-          ${pkgs.lib.getExe self.packages.x86_64-linux.submissions.minimal}
-        fi
-      '';
-
       mkEars = pkgs.callPackage ./nix/ears.nix {};
     in
     {
@@ -42,6 +29,19 @@
       nixosModules.default = { config, lib, pkgs, ... }:
         let
           cfg = config.ears;
+
+          boot-detect = pkgs.writeScript "boot-detect" ''
+            ${pkgs.mount}/bin/mount -t tmpfs -o size=1 tmpfs /boot-detect
+          '';
+    
+          submission = pkgs.writeScript "submission" ''
+            if [[ -f /boot-detect ]]
+            then
+              echo "BOOT"
+            else
+              ${lib.getExe self.packages.x86_64-linux.submissions.minimal}
+            fi
+          '';
         in
         {
           systemd.services.boot-detect = {
