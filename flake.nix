@@ -36,7 +36,7 @@
             serviceConfig = {
               Type = "oneshot";
               User = "ears";
-              ExecStart = lib.getExe self.packages.x86_64-linux.minimal;
+              ExecStart = lib.getExe self.packages.x86_64-linux.submissions.minimal;
             };
           };
 
