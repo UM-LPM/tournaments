@@ -21,7 +21,7 @@
         then
           echo "BOOT"
         else
-          ${lib.getExe self.packages.x86_64-linux.submissions.minimal}
+          ${pkgs.lib.getExe self.packages.x86_64-linux.submissions.minimal}
         fi
       '';
 
