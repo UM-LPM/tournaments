@@ -33,6 +33,9 @@
         {
           systemd.services.submissions = {
             description = "Submissions service";
+            restartTriggers = [
+              self.packages.x86_64-linux.submissions.minimal
+            ];
             serviceConfig = {
               Type = "oneshot";
               User = "ears";
